@@ -13,7 +13,7 @@ import pandas as pd
 import os
 
 pybaseball.cache.enable()
-YEARS = [2025]
+YEARS = [2021, 2022, 2023, 2024, 2025]
 COLUMNS_TO_KEEP = [
   # pitch characteristics
   'pitch_type',
