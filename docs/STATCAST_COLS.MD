@@ -1,6 +1,6 @@
 # Statcast Column Docs
 
-The following is a glossary pulled from directly from Baseball Savant. It is not up to date with all the columns we are pulling for our project, but might be helpful at a glance.
+The following is a glossary pulled from directly from [Baseball Savant](https://baseballsavant.mlb.com/csv-docs). It is not up to date with all the columns we are pulling for our project, but might be helpful at a glance.
 
 
 | Field                           | Description                                                                                                                                                                           |
