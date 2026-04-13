@@ -78,6 +78,15 @@ COLUMNS_TO_KEEP = [
   'pitcher_days_since_prev_game',
   'batter_days_since_prev_game',
   'n_thruorder_pitcher',
+
+  # ABE
+  'launch_speed_angle',
+  'release_extention',
+  'events',
+  'hc_x', #Hit coordinate (Where the ball is fielded)  
+  'hc_y', #Hit coordinate (Where the ball is fielded)
+  #'sprint_speed',
+  'bb_type'
 ]
 
 # function to retrieve info from statcast
