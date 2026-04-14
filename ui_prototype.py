@@ -334,6 +334,7 @@ with col_viz:
         'plate_x': plate_x,
         'plate_z': plate_z,
         'release_speed': release_speed,
+        'release_spin_rate': release_spin_rate,
         'pfx_x': pfx_x,
         'pfx_z': pfx_z,
         'balls': balls,
