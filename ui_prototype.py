@@ -9,11 +9,26 @@ import joblib
 # config
 from config import PITCH_TYPES, STRIKE_ZONE, MOVEMENT_SCALE, MOVEMENT_THRESHOLD
 
+CHART_HEIGHT = 600
+
 st.set_page_config(
     page_title="Batter Up!",
     page_icon="",
     layout="wide",
     initial_sidebar_state="collapsed"
+)
+
+st.markdown(
+    f"""
+    <style>
+    div[data-testid="stExpander"] div[data-testid="stExpanderDetails"] {{
+        max-height: {CHART_HEIGHT - 60}px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True,
 )
 
 ################# MODELING #################
@@ -216,7 +231,7 @@ def create_viz(plate_x, plate_z, batter_handedness, pfx_x=0, pfx_z=0, release_sp
         ),
         plot_bgcolor='rgba(96, 147, 93,0.7)',
         paper_bgcolor='rgba(0,0,0,0)',
-        height=600,
+        height=CHART_HEIGHT,
         margin=dict(l=20, r=20, t=60, b=20)
     )
     
@@ -227,101 +242,103 @@ col_controls, col_viz = st.columns([1, 2])
 
 # ================== CONTROL PANEL ==================
 with col_controls:
-    st.header("Pitch Controls")
-    
-    st.subheader("Pitch Type")
-    pitch_name = st.selectbox(
-        "Select Pitch",
-        options=PITCH_TYPES,
-        index=0
-    )
-    
-    st.subheader("Pitch Location")
-    plate_x = st.slider(
-        "Horizontal Position (left/right)",
-        min_value=-2.0,
-        max_value=2.0,
-        value=0.0,
-        step=0.05,
-        help="Position in feet from center of plate. Negative = left, Positive = right (from catcher's view)"   # make sure this isn't backwards
-    )
-    
-    plate_z = st.slider(
-        "Vertical Position (up/down)",
-        min_value=0.5,
-        max_value=5.0,
-        value=2.5,
-        step=0.05,
-        help="Height in feet from ground"
-    )
-    
-    st.subheader("Pitch Characteristics")
-    release_speed = st.slider(
-        "Release Speed (mph)",
-        min_value=70.0, # this should come from the bounds of tehe dataset
-        max_value=105.0,
-        value=92.0,
-        step=0.5
-    )
-    
-    release_spin_rate = st.slider(
-        "Spin Rate (rpm)",
-        min_value=1500,
-        max_value=3500,
-        value=2200,
-        step=50
-    )
-    
-    pfx_x = st.slider(
-        "Horizontal Movement (inches)",
-        min_value=-20.0,
-        max_value=20.0,
-        value=0.0,
-        step=0.5,
-        help="Movement in inches from catcher's perspective"
-    )
-    
-    pfx_z = st.slider(
-        "Vertical Movement (inches)",
-        min_value=-25.0,
-        max_value=25.0,
-        value=0.0,
-        step=0.5,
-        help="Movement in inches from catcher's perspective"
-    )
-    
-    release_extension = st.slider(
-        "Release Extension (feet)",
-        min_value=5.5,
-        max_value=8.0,
-        value=6.0,
-        step=0.05,
-        help="Distance from pitching rubber at release point"
-    )
-    
-    arm_angle = st.slider(
-        "Arm Angle (degrees)",
-        min_value=0,
-        max_value=90,
-        value=45,
-        step=1,
-        help="Release arm angle"
-    )
-    
-    st.subheader("Game Context")
-    
-    col_count1, col_count2 = st.columns(2)
-    with col_count1:
-        balls = st.selectbox("Balls", options=[0, 1, 2, 3], index=0)
-    with col_count2:
-        strikes = st.selectbox("Strikes", options=[0, 1, 2], index=0)
-    
-    col_hand1, col_hand2 = st.columns(2)
-    with col_hand1:
-        stand = st.selectbox("Batter", options=['R', 'L'], index=0, format_func=lambda x: f"Right" if x == 'R' else "Left")
-    with col_hand2:
-        p_throws = st.selectbox("Pitcher", options=['R', 'L'], index=0, format_func=lambda x: f"Right" if x == 'R' else "Left")
-    outs_when_up = st.selectbox("Outs", options=[0, 1, 2], index=0)
+    with st.expander("Pitch Controls", expanded=True):
+
+        st.header("Pitch Controls")
+        
+        st.subheader("Pitch Type")
+        pitch_name = st.selectbox(
+            "Select Pitch",
+            options=PITCH_TYPES,
+            index=0
+        )
+        
+        st.subheader("Pitch Location")
+        plate_x = st.slider(
+            "Horizontal Position (left/right)",
+            min_value=-2.0,
+            max_value=2.0,
+            value=0.0,
+            step=0.05,
+            help="Position in feet from center of plate. Negative = left, Positive = right (from catcher's view)"   # make sure this isn't backwards
+        )
+        
+        plate_z = st.slider(
+            "Vertical Position (up/down)",
+            min_value=0.5,
+            max_value=5.0,
+            value=2.5,
+            step=0.05,
+            help="Height in feet from ground"
+        )
+        
+        st.subheader("Pitch Characteristics")
+        release_speed = st.slider(
+            "Release Speed (mph)",
+            min_value=70.0, # this should come from the bounds of tehe dataset
+            max_value=105.0,
+            value=92.0,
+            step=0.5
+        )
+        
+        release_spin_rate = st.slider(
+            "Spin Rate (rpm)",
+            min_value=1500,
+            max_value=3500,
+            value=2200,
+            step=50
+        )
+        
+        pfx_x = st.slider(
+            "Horizontal Movement (inches)",
+            min_value=-20.0,
+            max_value=20.0,
+            value=0.0,
+            step=0.5,
+            help="Movement in inches from catcher's perspective"
+        )
+        
+        pfx_z = st.slider(
+            "Vertical Movement (inches)",
+            min_value=-25.0,
+            max_value=25.0,
+            value=0.0,
+            step=0.5,
+            help="Movement in inches from catcher's perspective"
+        )
+        
+        release_extension = st.slider(
+            "Release Extension (feet)",
+            min_value=5.5,
+            max_value=8.0,
+            value=6.0,
+            step=0.05,
+            help="Distance from pitching rubber at release point"
+        )
+        
+        arm_angle = st.slider(
+            "Arm Angle (degrees)",
+            min_value=0,
+            max_value=90,
+            value=45,
+            step=1,
+            help="Release arm angle"
+        )
+        
+        st.subheader("Game Context")
+        
+        col_count1, col_count2 = st.columns(2)
+        with col_count1:
+            balls = st.selectbox("Balls", options=[0, 1, 2, 3], index=0)
+        with col_count2:
+            strikes = st.selectbox("Strikes", options=[0, 1, 2], index=0)
+        
+        col_hand1, col_hand2 = st.columns(2)
+        with col_hand1:
+            stand = st.selectbox("Batter", options=['R', 'L'], index=0, format_func=lambda x: f"Right" if x == 'R' else "Left")
+        with col_hand2:
+            p_throws = st.selectbox("Pitcher", options=['R', 'L'], index=0, format_func=lambda x: f"Right" if x == 'R' else "Left")
+        outs_when_up = st.selectbox("Outs", options=[0, 1, 2], index=0)
 
 with col_viz:
     catcher_fig = create_viz(plate_x, plate_z, stand, pfx_x, pfx_z, release_speed)
