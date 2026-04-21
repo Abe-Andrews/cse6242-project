@@ -149,20 +149,16 @@ def render_control_panel():
                 options=list(LAUNCH_SPEED_ANGLE_LABELS.keys()), index=4,
                 format_func=lambda x: f"{x} – {LAUNCH_SPEED_ANGLE_LABELS[x]}"
             )
-            bat_speed = st.slider(
-                "Bat Speed (mph)", min_value=60.0, max_value=88.0, value=70.0, step=0.5
+            hc_x = st.slider(
+                "Hit Coordinate X (ft)", min_value=0.0, max_value=250.0, value=125.0, step=1.0,
+                help="Horizontal position where ball landed/was fielded"
             )
-            swing_length = st.slider(
-                "Swing Length (ft)", min_value=4.5, max_value=9.5, value=7.2, step=0.05
-            )
-            attack_angle = st.slider(
-                "Attack Angle (degrees)", min_value=-25.0, max_value=35.0, value=9.0, step=0.5
-            )
-            swing_path_tilt = st.slider(
-                "Swing Path Tilt (degrees)", min_value=15.0, max_value=50.0, value=32.0, step=0.5
+            hc_y = st.slider(
+                "Hit Coordinate Y (ft)", min_value=0.0, max_value=250.0, value=125.0, step=1.0,
+                help="Vertical position where ball landed/was fielded"
             )
         else:
-            bb_type = launch_speed_angle = bat_speed = swing_length = attack_angle = swing_path_tilt = None
+            bb_type = launch_speed_angle = hc_x = hc_y = None
 
     return {
         'pitch_name': pitch_name,
@@ -182,8 +178,6 @@ def render_control_panel():
         'use_batted_model': use_batted_model,
         'bb_type': bb_type,
         'launch_speed_angle': launch_speed_angle,
-        'bat_speed': bat_speed,
-        'swing_length': swing_length,
-        'attack_angle': attack_angle,
-        'swing_path_tilt': swing_path_tilt
+        'hc_x': hc_x,
+        'hc_y': hc_y
     }

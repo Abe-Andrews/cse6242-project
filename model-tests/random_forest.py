@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import joblib
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
@@ -42,6 +43,7 @@ features = [
     'plate_x', # Horizontal pitch location
     'plate_z', # Vertival pitch location
     'release_speed', # Release Speed of Pitch
+    'release_spin_rate',
     'pfx_x', # Horizontal pitch movement
     'pfx_z', # Vertical pitch movement
     'balls', # Current number of balls
@@ -49,7 +51,8 @@ features = [
     'stand', # Batter handedness
     'p_throws', # Pitcher handedness
     'release_extension',
-    'arm_angle'
+    'arm_angle',
+    'outs_when_up'
   ]
 
 # dependent variable
@@ -94,6 +97,10 @@ accuracy = accuracy_score(y_test, predictions)
 
 print("\n---------------MODEL A CLASSIFICATION REPORT (Pitching only) ----------------")
 print(classification_report(y_test, predictions, target_names=labler.classes_, zero_division=0))
+
+joblib.dump(model, 'models/rf_pitch_outcome_model.joblib')
+joblib.dump(labler, 'models/rf_pitch_outcome_labeler.joblib')
+print("\nModel A saved to models/rf_pitch_outcome_model.joblib")
 
 
 
@@ -153,6 +160,10 @@ predictions_B = model_B.predict(X_test_B_encoded)
 
 print("\n---------------MODEL B CLASSIFICATION REPORT (Assuming the ball was in play) ----------------")
 print(classification_report(y_test_B, predictions_B, target_names=labler_B.classes_, zero_division=0))
+
+joblib.dump(model_B, 'models/rf_batted_outcome_model.joblib')
+joblib.dump(labler_B, 'models/rf_batted_outcome_labeler.joblib')
+print("\nModel B saved to models/rf_batted_outcome_model.joblib")
 
 
 """

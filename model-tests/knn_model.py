@@ -7,6 +7,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
+import joblib
 
 df = pd.read_csv("data/data.csv")
 
@@ -49,7 +50,8 @@ features = [
     'stand', # Batter handedness
     'p_throws', # Pitcher handedness
     'release_extension',
-    'arm_angle'
+    'arm_angle',
+    'outs_when_up'
   ]
 
 # dependent variable
@@ -83,7 +85,8 @@ numeric_features = [
     'stand',
     'p_throws',
     'release_extension',
-    'arm_angle'
+    'arm_angle',
+    'outs_when_up'
 ]
 
 categorical_features = ['pitch_name']
@@ -133,6 +136,9 @@ knn_preds = best_knn_A.predict(X_test)
 
 print("\n---------------KNN MODEL A CLASSIFICATION REPORT----------------")
 print(classification_report(y_test, knn_preds, target_names=labler.classes_))
+
+joblib.dump(best_knn_A, 'models/knn_pitch_outcome_model.joblib')
+joblib.dump(labler, 'models/knn_pitch_outcome_labeler.joblib')
 
 #---------------KNN MODEL A CLASSIFICATION REPORT----------------
 #              precision    recall  f1-score   support
@@ -210,6 +216,7 @@ numeric_features_B = [
     'p_throws',
     'release_extension',
     'arm_angle',
+    'outs_when_up',
     'launch_speed_angle',
     'hc_x',
     'hc_y'
@@ -263,6 +270,9 @@ knn_preds_B = best_knn_B.predict(X_test_B)
 
 print("\n---------------KNN MODEL B CLASSIFICATION REPORT----------------")
 print(classification_report(y_test_B, knn_preds_B, target_names=labler_B.classes_))
+
+joblib.dump(best_knn_B, 'models/knn_batted_outcome_model.joblib')
+joblib.dump(labler_B, 'models/knn_batted_outcome_labeler.joblib')
 
 #---------------KNN MODEL B CLASSIFICATION REPORT----------------
 #              precision    recall  f1-score   support

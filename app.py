@@ -80,7 +80,8 @@ with col_results:
         'stand': inputs['stand'], 
         'p_throws': inputs['p_throws'],
         'release_extension': inputs['release_extension'],
-        'arm_angle': inputs['arm_angle']
+        'arm_angle': inputs['arm_angle'],
+        'outs_when_up': inputs['outs_when_up']
     }
     
     #  Pitching pred
@@ -93,10 +94,8 @@ with col_results:
         batted_inputs = {
             'bb_type': inputs['bb_type'],
             'launch_speed_angle': inputs['launch_speed_angle'],
-            'bat_speed': inputs['bat_speed'],
-            'swing_length': inputs['swing_length'],
-            'attack_angle': inputs['attack_angle'],
-            'swing_path_tilt': inputs['swing_path_tilt']
+            'hc_x': inputs['hc_x'],
+            'hc_y': inputs['hc_y']
         }
         batted_results = predict_batted_outcome(
             batting_model, batting_labeler, current_pitch_data, batted_inputs
