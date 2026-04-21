@@ -66,3 +66,16 @@ LAUNCH_SPEED_ANGLE_LABELS = {
     5: 'Solid Contact',
     6: 'Barrel'
 }
+
+MODEL_A_COLUMNS = [
+    'pitch_name', 'plate_x', 'plate_z', 'release_speed', 'release_spin_rate',
+    'pfx_x', 'pfx_z', 'balls', 'strikes', 'stand', 'p_throws',
+    'release_extension', 'arm_angle', 'outs_when_up'
+]
+
+MODEL_B_COLUMNS = [
+    'pitch_name', 'plate_x', 'plate_z', 'release_speed', 'release_spin_rate',
+    'pfx_x', 'pfx_z', 'balls', 'strikes', 'stand', 'p_throws',
+    'release_extension', 'arm_angle', 'outs_when_up', 'launch_speed_angle',
+    'hc_x', 'hc_y', 'bb_type'
+]
